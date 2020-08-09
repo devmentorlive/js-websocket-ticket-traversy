@@ -12,18 +12,18 @@ const server = http.createServer((req, res) => {
 function handleConnection(sock) {
   clients.add(sock);
   console.log("client connected!");
+  sendAvailableTicketsToClient(sock);
 
   sock.on("message", (e) => {
     const json = JSON.parse(e);
     switch (json.type) {
       case "buy-tickets":
-        availableTickets = availableTickets - json.payload;
-        sock.send(
-          JSON.stringify({
-            type: "tickets-sold",
-            payload: json.payload,
-          })
-        );
+        if (availableTickets - json.payload >= 0) {
+          availableTickets = availableTickets - json.payload;
+          for (let client of clients) {
+            sendAvailableTicketsToClient(client);
+          }
+        }
     }
     console.log("tickets left:", availableTickets);
   });
@@ -36,3 +36,12 @@ function handleConnection(sock) {
 server.listen(3001, () => {
   console.log("Server is up and listening on port 3001!");
 });
+
+function sendAvailableTicketsToClient(sock) {
+  sock.send(
+    JSON.stringify({
+      type: "available-tickets",
+      payload: availableTickets,
+    })
+  );
+}
