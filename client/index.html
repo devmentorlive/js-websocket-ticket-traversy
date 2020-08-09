@@ -3,9 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Buy an event ticket</title>
+    <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
-    <script src="/script.js"></script>
+    <div class="sales-form">
+      <img src="/event.jpg" class="event-photo" />
+
+      <div class="info">
+        <div class="occurs_at">9pm - 4am, October 31st 2020</div>
+
+        <div class="title">
+          Dance Dance Dance
+        </div>
+
+        <div class="description">
+          The EDM event of a lifetime. Lazers, loud music, 4 stages, 12 DJs,
+          pyrotechnics and heat!
+        </div>
+
+        <div class="act-now">
+          <button class="buy-now" onclick="showStep('buy')">
+            Buy now for $50
+          </button>
+
+          Get your ticket now, there are only
+          <span class="tickets-left">
+            <span id="available-ticket-count"></span> tickets</span
+          >
+          left!
+        </div>
+      </div>
+
+    <script src="/ws.js"></script>
+    <script src="/rendering.js"></script>
   </body>
 </html>
